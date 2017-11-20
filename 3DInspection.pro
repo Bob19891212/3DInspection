@@ -5,3 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
     src/app.cpp \
+    sdk/customexception.cpp
+
+HEADERS += \
+    sdk/customexception.hpp
