@@ -6,6 +6,8 @@
 *.ko
 *.obj
 *.elf
+*.slo
+*.lo
 
 # Linker output
 *.ilk
@@ -21,6 +23,9 @@
 *.a
 *.la
 *.lo
+*.so
+*.dylib
+*.dll
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -50,3 +55,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
