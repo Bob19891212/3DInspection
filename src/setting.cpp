@@ -3,8 +3,24 @@
 using namespace std;
 using namespace App;
 
-
-string Setting::setPath(string path)
+void Setting::readSetting()
 {
-    this->path = path;
+    try
+    {
+        //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //将AppSetting类实例化,调用读取文件(app.ini)的成员函数
+        AppSetting appSetting;
+        appSetting.readAppSetting(this->appSettingPath);
+
+        //将CaptureSetting类实例化,调用读取文件(capture.ini)的成员函数
+        CaptureSetting captureSetting;
+        captureSetting.readCaptureSetting(this->captureSettingPath);
+
+        //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    }
+    catch(const exception &ex)
+    {
+        //捕获异常时,将异常抛出
+        THROW_EXCEPTION(ex.what());
+    }
 }

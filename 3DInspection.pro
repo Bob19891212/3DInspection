@@ -9,10 +9,12 @@ SOURCES += \
     sdk/customexception.cpp \
     src/appsetting.cpp \
     src/capturesetting.cpp \
-    src/setting.cpp
+    src/setting.cpp \
+    sdk/rectangle.cpp
 
 HEADERS += \
     sdk/customexception.hpp \
     src/appsetting.hpp \
     src/capturesetting.hpp \
-    src/setting.hpp
+    src/setting.hpp \
+    sdk/rectangle.hpp

@@ -19,8 +19,7 @@ int main()
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
     Setting setting;
-    setting.readAppSetting("app.ini");
-    setting.readCaptureSetting("CaptureSetting.ini");
+    setting.readSetting();
 
     return 0;
 }
