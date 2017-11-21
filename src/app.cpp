@@ -1,18 +1,18 @@
 #include <iostream>
 
-
 #include "sdk/customexception.hpp"
+#include "appsetting.hpp"
 
 using namespace std;
+using namespace App;
 
-
-void func()
-{
-    THROW_EXCEPTION("Argument invaild!");
-}
 
 int main()
 {
-    func();
+    AppSetting appSetting;
+	  appSetting.readAppSetting("app.ini");
+
+
+
     return 0;
 }
