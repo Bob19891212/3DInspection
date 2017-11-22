@@ -11,7 +11,8 @@ SOURCES += \
     src/capturesetting.cpp \
     src/setting.cpp \
     sdk/rectangle.cpp \
-    job/measuredobj.cpp
+    job/measuredobj.cpp \
+    job/measuredobjlist.cpp
 
 HEADERS += \
     sdk/customexception.hpp \
@@ -19,4 +20,5 @@ HEADERS += \
     src/capturesetting.hpp \
     src/setting.hpp \
     sdk/rectangle.hpp \
-    job/measuredobj.hpp
+    job/measuredobj.hpp \
+    job/measuredobjlist.hpp
