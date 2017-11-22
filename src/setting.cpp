@@ -10,11 +10,11 @@ void Setting::readSetting()
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //将AppSetting类实例化,调用读取文件(app.ini)的成员函数
         AppSetting appSetting;
-        appSetting.readAppSetting(this->appSettingPath);
+        appSetting.readAppSetting(this->m_appSettingPath);
 
         //将CaptureSetting类实例化,调用读取文件(capture.ini)的成员函数
         CaptureSetting captureSetting;
-        captureSetting.readCaptureSetting(this->captureSettingPath);
+        captureSetting.readCaptureSetting(this->m_captureSettingPath);
 
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }

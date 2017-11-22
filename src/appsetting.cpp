@@ -78,8 +78,8 @@ void AppSetting::readAppSetting(const QString &path)
             //读取文件CompanyName内容,并判断是否在枚举中,如果不在则写入默认值
             QString name = configFile.value("CompanyName").toString();
 
-            if(name.toStdString() != AppSetting::pCompanyName[0] &&
-               name.toStdString() != AppSetting::pCompanyName[1])
+            if(name.toStdString() != AppSetting::m_pCompanyName[0] &&
+               name.toStdString() != AppSetting::m_pCompanyName[1])
             {
                 configFile.setValue("CompanyName","Scijet");
             }
@@ -92,7 +92,7 @@ void AppSetting::readAppSetting(const QString &path)
     //如果捕获异常,则输出异常信息
     catch(const exception &ex)
     {
-        cout<<"Unknow Error!"<<endl;
+        THROW_EXCEPTION(ex.what());
     }
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

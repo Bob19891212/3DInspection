@@ -66,16 +66,16 @@ namespace App
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //成员变量,分别对应读取文件中的数据
         //声明软件的主题为枚举类型,其值为Black,White
-        enum theme{Black ,White};
+        enum m_theme{Black ,White};
         //声明软件的语言为枚举类型,其值为CN,EN
-        enum lang{CN,EN};
+        enum m_lang{CN,EN};
         //声明设备的模式为枚举类型,其值为 Simulator, SingleLane, DualLane
-        enum laneMode{Simulator,SingleLane,DualLane};
+        enum m_laneMode{Simulator,SingleLane,DualLane};
         //声明设备的类型为枚举类型,其值为SPI,AOI
-        enum machineType{SPI,AOI};
+        enum m_machineType{SPI,AOI};
 
         //声明定义公司名称为字符型指针数组,分别为Scihet,Sung
-        const char * pCompanyName[2] = {"Scijet","Sung"};
+        const char * m_pCompanyName[2] = {"Scijet","Sung"};
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     };
 } //End of namespace AppSetting
