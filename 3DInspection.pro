@@ -10,11 +10,13 @@ SOURCES += \
     src/appsetting.cpp \
     src/capturesetting.cpp \
     src/setting.cpp \
-    sdk/rectangle.cpp
+    sdk/rectangle.cpp \
+    job/measuredobj.cpp
 
 HEADERS += \
     sdk/customexception.hpp \
     src/appsetting.hpp \
     src/capturesetting.hpp \
     src/setting.hpp \
-    sdk/rectangle.hpp
+    sdk/rectangle.hpp \
+    job/measuredobj.hpp
