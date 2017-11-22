@@ -11,7 +11,7 @@
 #define THROW_EXCEPTION(exMsg)\
 {\
     std::ostringstream message;\
-    message << "File:"<<__FILE__<<"\n"\
+    message << "\n""File:"<<__FILE__<<"\n"\
             << "Line:"<<__LINE__<<"\n"\
             << "Func:"<<__FUNCTION__<<"\n"\
             << "Detail:"<<exMsg<<"\n";\
