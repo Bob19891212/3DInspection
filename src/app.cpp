@@ -4,9 +4,11 @@
 #include "appsetting.hpp"
 #include "capturesetting.hpp"
 #include "setting.hpp"
+#include "../job/measuredobjlist.hpp"
 
 using namespace std;
 using namespace App;
+using namespace Job;
 
 
 int main()
@@ -18,8 +20,12 @@ int main()
 //    captureSetting.writeCaptureSetting("CaptureSetting.ini");
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
-    Setting setting;
-    setting.readSetting();
+    MeasuredObjList measureObjList;
+    measureObjList.createLinkedList(5);
+    measureObjList.print();
+    int i;
+    i = measureObjList.getSize();
+    cout<<"\n"<<i<<endl;
 
     return 0;
 }
