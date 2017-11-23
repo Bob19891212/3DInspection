@@ -4,6 +4,16 @@ using namespace App;
 using namespace std;
 
 
+AppSetting::AppSetting()
+{
+
+}
+
+AppSetting::~AppSetting()
+{
+
+}
+
 void AppSetting::readAppSetting(const QString &path)
 {
     try

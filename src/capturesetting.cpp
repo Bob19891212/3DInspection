@@ -4,6 +4,18 @@ using namespace std;
 using namespace App;
 
 
+CaptureSetting::CaptureSetting()
+{
+    this->m_imgWidth = 4096;                //定义图片的宽度为4096
+    this->m_imgHeight = 3072;               //定义图片的高度为3072
+    this->m_imgBit = 8;                     //初始化图片格式的位数为8
+}
+
+CaptureSetting::~CaptureSetting()
+{
+
+}
+
 void CaptureSetting::readCaptureSetting(const QString &path)
 {
     try
@@ -55,8 +67,7 @@ void CaptureSetting::readCaptureSetting(const QString &path)
             //读取文件Image/ImgBit数据,并判断是否与系统默认值匹配,如果不匹配,则抛出异常
             int imgBit = configFile.value("Image/ImgBit").toInt();
 
-            if(imgBit !=  CaptureSetting::m_imgBitArr[0] &&
-                    imgBit !=  CaptureSetting::m_imgBitArr[1])
+            if(imgBit !=  8 && imgBit !=  16)
             {
                 THROW_EXCEPTION("读取文件数据Image/ImgBit失败!");
             }
@@ -89,7 +100,7 @@ void CaptureSetting::writeCaptureSetting(const QString &path)
         //将Image/Height的数据写为系统默认值,默认为"3072"
         configFile.setValue("Image/Height",CaptureSetting::m_imgHeight);
         //将Image/Height的数据写为系统默认值,默认为"8"
-        configFile.setValue("Image/ImgBit",CaptureSetting::m_imgBitArr[0]);
+        configFile.setValue("Image/ImgBit",CaptureSetting::m_imgBit);
 
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }

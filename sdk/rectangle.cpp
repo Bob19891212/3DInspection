@@ -12,4 +12,9 @@ Rectangle::Rectangle()
     this->m_height = 0;
 }
 
+Rectangle::~Rectangle()
+{
+
+}
+
 
