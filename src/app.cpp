@@ -18,6 +18,8 @@ int main()
 //    captureSetting.writeCaptureSetting("CaptureSetting.ini");
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
+
+
     Setting setting;
     setting.readSetting();
 
