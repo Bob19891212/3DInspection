@@ -12,7 +12,8 @@ SOURCES += \
     src/setting.cpp \
     sdk/rectangle.cpp \
     job/measuredobj.cpp \
-    job/measuredobjlist.cpp
+    job/measuredobjlist.cpp \
+    datahelper/formatconvertion.cpp
 
 HEADERS += \
     sdk/customexception.hpp \
@@ -21,4 +22,5 @@ HEADERS += \
     src/setting.hpp \
     sdk/rectangle.hpp \
     job/measuredobj.hpp \
-    job/measuredobjlist.hpp
+    job/measuredobjlist.hpp \
+    datahelper/formatconvertion.hpp

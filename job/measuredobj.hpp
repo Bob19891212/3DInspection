@@ -1,7 +1,13 @@
 #ifndef MEASUREDOBJ_HPP
 #define MEASUREDOBJ_HPP
 
+#include <cstdlib>
+
 #include "../sdk/rectangle.hpp"
+#include "../sdk/customexception.hpp"
+
+
+#define RANDOM_NUM  (double)((rand()/(double)RAND_MAX) * 100)
 
 using namespace std;
 

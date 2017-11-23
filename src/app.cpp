@@ -21,11 +21,12 @@ int main()
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
     MeasuredObjList measureObjList;
-    measureObjList.createLinkedList(5);
+    measureObjList.createLinkedList(50);
     measureObjList.print();
+    measureObjList.pullHead();
     int i;
     i = measureObjList.getSize();
-    cout<<"\n"<<i<<endl;
+    cout<<i<<endl;
 
     return 0;
 }

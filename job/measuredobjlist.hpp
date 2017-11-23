@@ -1,9 +1,10 @@
 #ifndef MEASUREDOBJLIST_HPP
 #define MEASUREDOBJLIST_HPP
 
-#include <iostream>
+#include <ctime>
 
 #include "../sdk/customexception.hpp"
+#include "../datahelper/formatconvertion.hpp"
 #include "measuredobj.hpp"
 
 using namespace std;
@@ -49,7 +50,14 @@ namespace Job
         *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的表头对象)
         *  @return  N/A
         */
-        void pushHead(Job::MeasuredObj measuredObj);
+        void pushHead(MeasuredObj measuredObj);
+
+        /*
+        *  @brief   将对象插入至链表的尾部
+        *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的尾部对象)
+        *  @return  N/A
+        */
+        void pushTail(MeasuredObj measuredObj);
 
         /*
         *  @brief   删除链表中第一个节点
@@ -57,13 +65,6 @@ namespace Job
         *  @return  N/A
         */
         void pullHead();
-
-        /*
-        *  @brief   将对象插入至链表的尾部
-        *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的尾部对象)
-        *  @return  N/A
-        */
-        void pushTail(Job::MeasuredObj measuredObj);
 
         /*
         *  @brief   删除链表中最后一个节点
@@ -74,6 +75,9 @@ namespace Job
 
         //获取链表的大小
         int getSize();
+
+        //设置链表的大小
+        void setSize(int size);
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

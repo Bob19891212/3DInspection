@@ -27,22 +27,24 @@ MeasuredObj::~MeasuredObj()
 SSDK::Rectangle MeasuredObj::getRectangle()
 {
     //获取 rectangle 的X轴,Y轴坐标,角度,长和宽
-    this->m_rectangle.getX();
-    this->m_rectangle.getY();
-    this->m_rectangle.getAngle();
-    this->m_rectangle.getWidth();
-    this->m_rectangle.getHeight();
     return this->m_rectangle;
 }
 
 void MeasuredObj::setRectangle()
 {
-    //设置rectangle的X轴,Y轴坐标,角度,长和宽
-    this->m_rectangle.setX(1);
-    this->m_rectangle.setY(1);
-    this->m_rectangle.setAngle(1);
-    this->m_rectangle.setWidth(1);
-    this->m_rectangle.setHeight(1);
+    try
+    {
+        //设置rectangle的X轴,Y轴坐标,角度,长和宽
+        this->m_rectangle.setX(RANDOM_NUM);
+        this->m_rectangle.setY(RANDOM_NUM);
+        this->m_rectangle.setAngle(RANDOM_NUM);
+        this->m_rectangle.setWidth(RANDOM_NUM);
+        this->m_rectangle.setHeight(RANDOM_NUM);
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
 }
 //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
