@@ -84,13 +84,13 @@ void MeasuredObjList::createLinkedList(int size)
             if(i < 20)
             {
                 namePrefix = "chip";
-                nameIndex = formatConvertion.intToString(i);
+                nameIndex = formatConvertion.intToString(i+1);
                 name = namePrefix + nameIndex;
             }
             else
             {
                 namePrefix = "ic";
-                nameIndex = formatConvertion.intToString(i - 20);
+                nameIndex = formatConvertion.intToString(i - 19);
                 name = namePrefix + nameIndex;
             }
 

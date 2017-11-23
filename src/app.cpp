@@ -20,12 +20,6 @@ int main()
 //    captureSetting.writeCaptureSetting("CaptureSetting.ini");
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
-<<<<<<< HEAD
-
-
-    Setting setting;
-    setting.readSetting();
-=======
     MeasuredObjList measureObjList;
     measureObjList.createLinkedList(50);
     measureObjList.print();
@@ -33,7 +27,6 @@ int main()
     int i;
     i = measureObjList.getSize();
     cout<<i<<endl;
->>>>>>> feature_measuredobjlist
 
     return 0;
 }
