@@ -1,6 +1,8 @@
 # AppLauncher
 启动软件的App程序
 
+
+
 ##### 1.启动软件，加载AppSetting.ini和CaptureSetting.ini，考虑其中异常如何处理
 
 ####  2.在2个配置都加载成功的基础上，扫描JobFolderPath目录下的程式
