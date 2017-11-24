@@ -5,6 +5,7 @@
 #include "capturesetting.hpp"
 #include "setting.hpp"
 #include "../job/measuredobjlist.hpp"
+#include "../job/board.hpp"
 
 using namespace std;
 using namespace App;
@@ -20,20 +21,24 @@ int main()
 //    captureSetting.writeCaptureSetting("CaptureSetting.ini");
 //    captureSetting.readCaptureSetting("CaptureSetting.ini");
 
-<<<<<<< HEAD
+//    MeasuredObjList measureObjList;
+//    measureObjList.createLinkedList(50);
+//    measureObjList.print();
+//    measureObjList.pullHead();
+//    int i;
+//    i = measureObjList.getSize();
+//    cout<<i<<endl;
 
-
-    Setting setting;
-    setting.readSetting();
-=======
-    MeasuredObjList measureObjList;
-    measureObjList.createLinkedList(50);
-    measureObjList.print();
-    measureObjList.pullHead();
-    int i;
-    i = measureObjList.getSize();
-    cout<<i<<endl;
->>>>>>> feature_measuredobjlist
+    QString path ="test.xml";
+    Job::Board board;
+    board.randomObjListData();
+    board.setName("apple");
+    board.setSizeX(50);
+    board.setSizeY(40);
+    board.setOriginalX(20);
+    board.setOriginalY(10);
+//    board.writeToXml(path);
+    board.getMeasuredObjList().print();
 
     return 0;
 }

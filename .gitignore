@@ -47,14 +47,18 @@
 *.su
 *.idb
 *.pdb
+*.user
 
 # Kernel Module Compile Results
 *.mod*
 *.cmd
+Makefile
 .tmp_versions/
 modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+
 
 
