@@ -1,5 +1,5 @@
-# AppLauncher
-启动软件的App程序
+#3DInspection
+基于电子制造业的3D检测软件
 
 ##### 1.启动软件，加载AppSetting.ini和CaptureSetting.ini，考虑其中异常如何处理
 
