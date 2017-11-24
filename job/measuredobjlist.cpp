@@ -20,6 +20,7 @@ MeasuredObjList::~MeasuredObjList()
     //如果表头指针不为nullPtr,则依次释放所有链表的节点
     while (this->m_pHeadObj != nullptr)
     {
+
         //将链表中下一个节点的地址赋值给对象
         pTmpObj = this->m_pHeadObj->getNextMeasuredObjPtr();
 

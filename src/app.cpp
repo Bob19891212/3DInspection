@@ -6,6 +6,7 @@
 #include "setting.hpp"
 #include "../job/measuredobjlist.hpp"
 #include "../job/board.hpp"
+#include "../job/inspectiondata.hpp"
 
 using namespace std;
 using namespace App;
@@ -30,6 +31,7 @@ int main()
 //    cout<<i<<endl;
 
     QString path ="test.xml";
+
     Job::Board board;
     board.randomObjListData();
     board.setName("apple");
@@ -37,8 +39,33 @@ int main()
     board.setSizeY(40);
     board.setOriginalX(20);
     board.setOriginalY(10);
-    board.writeToXml(path);
-    board.getMeasuredObjList().print();
+
+    Job::InspectionData inspectionData;
+
+    inspectionData.setBoard(&board);
+//    inspectionData.setVersion("V1");
+//    inspectionData.setLastEditingTime("2013-05-12");
+//    inspectionData.getBoard().randomObjListData();
+//    inspectionData.getBoard().setName("name");
+//    inspectionData.getBoard().setOriginalX(50);
+//    inspectionData.getBoard().setOriginalY(20);
+//    inspectionData.getBoard().setSizeX(100);
+//    inspectionData.getBoard().setSizeY(200);
+
+//    inspectionData.getBoard().getMeasuredObjList().print();
+
+    inspectionData.writeToXml(path);
+
+
+//    board.randomObjListData();
+//    board.setName("apple");
+//    board.setSizeX(50);
+//    board.setSizeY(40);
+//    board.setOriginalX(20);
+//    board.setOriginalY(10);
+//    board.writeToXml(path);
+//    board.getMeasuredObjList().print();
+
 
     return 0;
 }

@@ -29,71 +29,87 @@ void Board::writeToXml(QString path)
 {
     try
     {
-        QDomDocument pcbInfo;
+        QDomDocument doc;
 
-        QDomElement board = pcbInfo.createElement("Board");
+        QDomElement root = doc.createElement("Board");
 
-        board.setAttribute("基板名称",QString::fromStdString( this->getName()));
+        root.setAttribute("基板名称",QString::fromStdString( this->getName()));
 
-        board.setAttribute("基板长度",this->getSizeX());
+        root.setAttribute("基板长度",this->getSizeX());
 
-        board.setAttribute("基板宽度",this->getSizeY());
+        root.setAttribute("基板宽度",this->getSizeY());
 
-        board.setAttribute("X轴坐标",this->getOriginalX());
+        root.setAttribute("X轴坐标",this->getOriginalX());
 
-        board.setAttribute("Y轴坐标",this->getOriginalY());
+        root.setAttribute("Y轴坐标",this->getOriginalY());
 
-        pcbInfo.appendChild(board);
+        doc.appendChild(root);
 
         MeasuredObj * pTmpObj = this->m_measuredObjList.getHeadPtr();
 
         while (pTmpObj != nullptr)
         {
-            QDomElement objList = pcbInfo.createElement("Target");
-            board.appendChild(objList);
+            QDomElement objList = doc.createElement("Target");
 
-            QDomElement objName = pcbInfo.createElement(QString::fromLocal8Bit("元件名称"));
-            QDomElement objX = pcbInfo.createElement(QString::fromLocal8Bit("X轴坐标"));
-            QDomElement objY = pcbInfo.createElement(QString::fromLocal8Bit("Y轴坐标"));
-            QDomElement objAngle = pcbInfo.createElement(QString::fromLocal8Bit("元件角度"));
-            QDomElement objWidth = pcbInfo.createElement(QString::fromLocal8Bit("元件宽度"));
-            QDomElement objHeight = pcbInfo.createElement(QString::fromLocal8Bit("元件高度"));
+            QString str = QString::fromStdString(pTmpObj->getName());
+            objList.setAttribute("元件名称",str);
 
-            objList.appendChild(objName);
-            objList.appendChild(objX);
-            objList.appendChild(objY);
-            objList.appendChild(objAngle);
-            objList.appendChild(objWidth);
-            objList.appendChild(objHeight);
+            //            QDomAttr objProperty = pcbInfo.createAttribute("元件名称");
+            //            objProperty.setValue(QString::fromStdString(pTmpObj->getName()));
 
-            QDomText objNameText = pcbInfo.createTextNode(QString::fromStdString(pTmpObj->getName()));
-            QDomText objXText = pcbInfo.createTextNode(QString::number(pTmpObj->getRectangle().getX()));
-            QDomText objYText = pcbInfo.createTextNode(QString::number(pTmpObj->getRectangle().getY()));
-            QDomText objAngleText = pcbInfo.createTextNode(QString::number(pTmpObj->getRectangle().getAngle()));
-            QDomText objWidthText = pcbInfo.createTextNode(QString::number(pTmpObj->getRectangle().getWidth()));
-            QDomText objHeightText = pcbInfo.createTextNode(QString::number(pTmpObj->getRectangle().getHeight()));
+            //            objList.setAttributeNode(objProperty);
 
-            objName.appendChild(objNameText);
-            objX.appendChild(objXText);
-            objY.appendChild(objYText);
-            objAngle.appendChild(objAngleText);
-            objWidth.appendChild(objWidthText);
-            objHeight.appendChild(objHeightText);
+            //            objProperty = pcbInfo.createAttribute("X轴坐标");
+            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getX()));
 
+            //            objList.setAttributeNode(objProperty);
+
+            //            objProperty = pcbInfo.createAttribute("Y轴坐标");
+            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getY()));
+
+            //            objProperty = pcbInfo.createAttribute("元件角度");
+            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getAngle()));
+
+
+            //            objList.setAttributeNode(objProperty);
+
+
+            str = QString::number(pTmpObj->getRectangle().getX());
+            objList.setAttribute("X轴坐标",str);
+
+            str = QString::number(pTmpObj->getRectangle().getY());
+            objList.setAttribute("Y轴坐标",str);
+
+            str = QString::number(pTmpObj->getRectangle().getAngle());
+            objList.setAttribute("元件角度",str);
+
+            str = QString::number(pTmpObj->getRectangle().getWidth());
+            objList.setAttribute("元件宽度",str);
+
+            str = QString::number(pTmpObj->getRectangle().getHeight());
+            objList.setAttribute("元件高度",str);
+
+
+
+            root.appendChild(objList);
             pTmpObj = pTmpObj->getNextMeasuredObjPtr();
         }
+
+
+
+
 
         QString filePath( path );
         QFile file(filePath);
 
         if (!file.open(QFile::WriteOnly | QFile::Text))
         {
-               THROW_EXCEPTION("打开文件失败!!");
+            THROW_EXCEPTION("打开文件失败!!");
         }
 
         QTextStream out(&file);
 
-        pcbInfo.save(out,4);
+        doc.save(out,4);
 
         file.close();
     }
@@ -108,16 +124,4 @@ void Board::randomObjListData()
 {
     this->m_measuredObjList.createLinkedList(SIZE);
 }
-
-
-void Board::setMeasurdObjList(MeasuredObjList measuredObjList)
-{
-   this->m_measuredObjList = measuredObjList;
-}
-
-MeasuredObjList & Board::getMeasuredObjList()
-{
-    return m_measuredObjList;
-}
-
 //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
