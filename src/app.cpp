@@ -37,7 +37,7 @@ int main()
     board.setSizeY(40);
     board.setOriginalX(20);
     board.setOriginalY(10);
-//    board.writeToXml(path);
+    board.writeToXml(path);
     board.getMeasuredObjList().print();
 
     return 0;

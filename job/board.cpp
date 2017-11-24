@@ -115,7 +115,7 @@ void Board::setMeasurdObjList(MeasuredObjList measuredObjList)
    this->m_measuredObjList = measuredObjList;
 }
 
-MeasuredObjList &Board::getMeasuredObjList()
+MeasuredObjList & Board::getMeasuredObjList()
 {
     return m_measuredObjList;
 }

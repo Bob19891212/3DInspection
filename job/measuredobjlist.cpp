@@ -79,7 +79,7 @@ void MeasuredObjList::createLinkedList(int size)
             //step2
             //将新增的成员变量赋值
             //设置新增节点的X,Y轴坐标,角度,及长和宽
-            pNewObj->setRectangle();
+            pNewObj->setRandomRectangle();
 
             if(i < 20)
             {

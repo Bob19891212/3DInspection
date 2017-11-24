@@ -15,7 +15,8 @@ SOURCES += \
     job/measuredobj.cpp \
     job/measuredobjlist.cpp \
     datahelper/formatconvertion.cpp \
-    job/board.cpp
+    job/board.cpp \
+    job/inspectiondata.cpp
 
 HEADERS += \
     sdk/customexception.hpp \
@@ -26,4 +27,5 @@ HEADERS += \
     job/measuredobj.hpp \
     job/measuredobjlist.hpp \
     datahelper/formatconvertion.hpp \
-    job/board.hpp
+    job/board.hpp \
+    job/inspectiondata.hpp
