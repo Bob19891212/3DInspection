@@ -29,30 +29,32 @@ void Board::writeToXml(QString path)
 {
     try
     {
-        QDomDocument doc;
+        QDomDocument pcbInfo;
 
-        QDomElement root = doc.createElement("Board");
+        QDomElement board = pcbInfo.createElement("Board");
 
-        root.setAttribute("基板名称",QString::fromStdString( this->getName()));
+        board.setAttribute("基板名称",QString::fromStdString( this->getName()));
 
-        root.setAttribute("基板长度",this->getSizeX());
+        board.setAttribute("基板长度",this->getSizeX());
 
-        root.setAttribute("基板宽度",this->getSizeY());
+        board.setAttribute("基板宽度",this->getSizeY());
 
-        root.setAttribute("X轴坐标",this->getOriginalX());
+        board.setAttribute("X轴坐标",this->getOriginalX());
 
-        root.setAttribute("Y轴坐标",this->getOriginalY());
+        board.setAttribute("Y轴坐标",this->getOriginalY());
 
-        doc.appendChild(root);
+        pcbInfo.appendChild(board);
 
         MeasuredObj * pTmpObj = this->m_measuredObjList.getHeadPtr();
 
         while (pTmpObj != nullptr)
         {
-            QDomElement objList = doc.createElement("Target");
+            QDomElement objList = pcbInfo.createElement(QString::fromStdString(pTmpObj->getName()));
 
-            QString str = QString::fromStdString(pTmpObj->getName());
-            objList.setAttribute("元件名称",str);
+            board.appendChild(objList);
+
+//            QString str = QString::fromStdString(pTmpObj->getName());
+//            objList.setAttribute("元件名称",str);
 
             //            QDomAttr objProperty = pcbInfo.createAttribute("元件名称");
             //            objProperty.setValue(QString::fromStdString(pTmpObj->getName()));
@@ -74,7 +76,7 @@ void Board::writeToXml(QString path)
             //            objList.setAttributeNode(objProperty);
 
 
-            str = QString::number(pTmpObj->getRectangle().getX());
+            QString str = QString::number(pTmpObj->getRectangle().getX());
             objList.setAttribute("X轴坐标",str);
 
             str = QString::number(pTmpObj->getRectangle().getY());
@@ -91,7 +93,6 @@ void Board::writeToXml(QString path)
 
 
 
-            root.appendChild(objList);
             pTmpObj = pTmpObj->getNextMeasuredObjPtr();
         }
 
@@ -109,7 +110,7 @@ void Board::writeToXml(QString path)
 
         QTextStream out(&file);
 
-        doc.save(out,4);
+        pcbInfo.save(out,4);
 
         file.close();
     }

@@ -51,11 +51,11 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = src/app.cpp \
+SOURCES       = app.cpp \
 		sdk/customexception.cpp \
-		src/appsetting.cpp \
-		src/capturesetting.cpp \
-		src/setting.cpp \
+		app/appsetting.cpp \
+		app/capturesetting.cpp \
+		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
@@ -253,19 +253,19 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/lex.prf \
 		3DInspection.pro sdk/customexception.hpp \
-		src/appsetting.hpp \
-		src/capturesetting.hpp \
-		src/setting.hpp \
+		app/appsetting.hpp \
+		app/capturesetting.hpp \
+		app/setting.hpp \
 		sdk/rectangle.hpp \
 		job/measuredobj.hpp \
 		job/measuredobjlist.hpp \
 		datahelper/formatconvertion.hpp \
 		job/board.hpp \
-		job/inspectiondata.hpp src/app.cpp \
+		job/inspectiondata.hpp app.cpp \
 		sdk/customexception.cpp \
-		src/appsetting.cpp \
-		src/capturesetting.cpp \
-		src/setting.cpp \
+		app/appsetting.cpp \
+		app/capturesetting.cpp \
+		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
@@ -667,8 +667,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents sdk/customexception.hpp src/appsetting.hpp src/capturesetting.hpp src/setting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp datahelper/formatconvertion.hpp job/board.hpp job/inspectiondata.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/app.cpp sdk/customexception.cpp src/appsetting.cpp src/capturesetting.cpp src/setting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp datahelper/formatconvertion.cpp job/board.cpp job/inspectiondata.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sdk/customexception.hpp app/appsetting.hpp app/capturesetting.hpp app/setting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp datahelper/formatconvertion.hpp job/board.hpp job/inspectiondata.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents app.cpp sdk/customexception.cpp app/appsetting.cpp app/capturesetting.cpp app/setting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp datahelper/formatconvertion.cpp job/board.cpp job/inspectiondata.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -714,8 +714,8 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-app.o: src/app.cpp sdk/customexception.hpp \
-		src/appsetting.hpp \
+app.o: app.cpp sdk/customexception.hpp \
+		app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -781,8 +781,8 @@ app.o: src/app.cpp sdk/customexception.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
-		src/capturesetting.hpp \
-		src/setting.hpp \
+		app/capturesetting.hpp \
+		app/setting.hpp \
 		job/measuredobjlist.hpp \
 		datahelper/formatconvertion.hpp \
 		job/measuredobj.hpp \
@@ -794,12 +794,12 @@ app.o: src/app.cpp sdk/customexception.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
 		job/inspectiondata.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o src/app.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o app.cpp
 
 customexception.o: sdk/customexception.cpp sdk/customexception.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customexception.o sdk/customexception.cpp
 
-appsetting.o: src/appsetting.cpp src/appsetting.hpp \
+appsetting.o: app/appsetting.cpp app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -866,9 +866,9 @@ appsetting.o: src/appsetting.cpp src/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o appsetting.o src/appsetting.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o appsetting.o app/appsetting.cpp
 
-capturesetting.o: src/capturesetting.cpp src/capturesetting.hpp \
+capturesetting.o: app/capturesetting.cpp app/capturesetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -935,10 +935,10 @@ capturesetting.o: src/capturesetting.cpp src/capturesetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o src/capturesetting.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o app/capturesetting.cpp
 
-setting.o: src/setting.cpp src/setting.hpp \
-		src/appsetting.hpp \
+setting.o: app/setting.cpp app/setting.hpp \
+		app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -1005,8 +1005,8 @@ setting.o: src/setting.cpp src/setting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp \
-		src/capturesetting.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o src/setting.cpp
+		app/capturesetting.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o app/setting.cpp
 
 rectangle.o: sdk/rectangle.cpp sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rectangle.o sdk/rectangle.cpp

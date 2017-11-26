@@ -72,9 +72,9 @@ namespace Job
         }
 
         //设置元件对象的X,Y轴坐标,角度,宽和高
-        void setRectangle(SSDK::Rectangle rectangle)
+        void setRectangle(SSDK::Rectangle * rectangle)
         {
-            this->m_rectangle = rectangle;
+            this->m_rectangle = (*rectangle);
         }
 
         //随机生成对象的X,Y轴坐标,的角度,宽和高
