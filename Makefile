@@ -51,16 +51,17 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = src/app.cpp \
+SOURCES       = app.cpp \
 		sdk/customexception.cpp \
-		src/appsetting.cpp \
-		src/capturesetting.cpp \
-		src/setting.cpp \
+		app/appsetting.cpp \
+		app/capturesetting.cpp \
+		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
 		datahelper/formatconvertion.cpp \
-		job/board.cpp 
+		job/board.cpp \
+		job/inspectiondata.cpp 
 OBJECTS       = app.o \
 		customexception.o \
 		appsetting.o \
@@ -70,7 +71,8 @@ OBJECTS       = app.o \
 		measuredobj.o \
 		measuredobjlist.o \
 		formatconvertion.o \
-		board.o
+		board.o \
+		inspectiondata.o
 DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/linux.conf \
@@ -231,6 +233,7 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -250,23 +253,25 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/yacc.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/lex.prf \
 		3DInspection.pro sdk/customexception.hpp \
-		src/appsetting.hpp \
-		src/capturesetting.hpp \
-		src/setting.hpp \
+		app/appsetting.hpp \
+		app/capturesetting.hpp \
+		app/setting.hpp \
 		sdk/rectangle.hpp \
 		job/measuredobj.hpp \
 		job/measuredobjlist.hpp \
 		datahelper/formatconvertion.hpp \
-		job/board.hpp src/app.cpp \
+		job/board.hpp \
+		job/inspectiondata.hpp app.cpp \
 		sdk/customexception.cpp \
-		src/appsetting.cpp \
-		src/capturesetting.cpp \
-		src/setting.cpp \
+		app/appsetting.cpp \
+		app/capturesetting.cpp \
+		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
 		datahelper/formatconvertion.cpp \
-		job/board.cpp
+		job/board.cpp \
+		job/inspectiondata.cpp
 QMAKE_TARGET  = 3DInspection
 DESTDIR       = 
 TARGET        = 3DInspection
@@ -438,6 +443,7 @@ Makefile: 3DInspection.pro /opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf 
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/qt_config.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/exclusive_builds.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/toolchain.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/default_pre.prf \
@@ -622,6 +628,7 @@ Makefile: 3DInspection.pro /opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf 
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/qt_config.prf:
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/linux-g++/qmake.conf:
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/exclusive_builds.prf:
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/toolchain.prf:
 /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/default_pre.prf:
@@ -660,8 +667,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents sdk/customexception.hpp src/appsetting.hpp src/capturesetting.hpp src/setting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp datahelper/formatconvertion.hpp job/board.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/app.cpp sdk/customexception.cpp src/appsetting.cpp src/capturesetting.cpp src/setting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp datahelper/formatconvertion.cpp job/board.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sdk/customexception.hpp app/appsetting.hpp app/capturesetting.hpp app/setting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp datahelper/formatconvertion.hpp job/board.hpp job/inspectiondata.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents app.cpp sdk/customexception.cpp app/appsetting.cpp app/capturesetting.cpp app/setting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp datahelper/formatconvertion.cpp job/board.cpp job/inspectiondata.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -707,8 +714,8 @@ compiler_clean: compiler_moc_predefs_clean
 
 ####### Compile
 
-app.o: src/app.cpp sdk/customexception.hpp \
-		src/appsetting.hpp \
+app.o: app.cpp sdk/customexception.hpp \
+		app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -774,8 +781,8 @@ app.o: src/app.cpp sdk/customexception.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
-		src/capturesetting.hpp \
-		src/setting.hpp \
+		app/capturesetting.hpp \
+		app/setting.hpp \
 		job/measuredobjlist.hpp \
 		datahelper/formatconvertion.hpp \
 		job/measuredobj.hpp \
@@ -785,13 +792,14 @@ app.o: src/app.cpp sdk/customexception.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qdom.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxmlglobal.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o src/app.cpp
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
+		job/inspectiondata.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o app.cpp
 
 customexception.o: sdk/customexception.cpp sdk/customexception.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customexception.o sdk/customexception.cpp
 
-appsetting.o: src/appsetting.cpp src/appsetting.hpp \
+appsetting.o: app/appsetting.cpp app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -858,9 +866,9 @@ appsetting.o: src/appsetting.cpp src/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o appsetting.o src/appsetting.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o appsetting.o app/appsetting.cpp
 
-capturesetting.o: src/capturesetting.cpp src/capturesetting.hpp \
+capturesetting.o: app/capturesetting.cpp app/capturesetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -927,10 +935,10 @@ capturesetting.o: src/capturesetting.cpp src/capturesetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o src/capturesetting.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o app/capturesetting.cpp
 
-setting.o: src/setting.cpp src/setting.hpp \
-		src/appsetting.hpp \
+setting.o: app/setting.cpp app/setting.hpp \
+		app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
@@ -997,8 +1005,8 @@ setting.o: src/setting.cpp src/setting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp \
-		src/capturesetting.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o src/setting.cpp
+		app/capturesetting.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o app/setting.cpp
 
 rectangle.o: sdk/rectangle.cpp sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rectangle.o sdk/rectangle.cpp
@@ -1094,6 +1102,83 @@ board.o: job/board.cpp job/board.hpp \
 		job/measuredobj.hpp \
 		sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o board.o job/board.cpp
+
+inspectiondata.o: job/inspectiondata.cpp job/inspectiondata.hpp \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/QDomDocument \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qdom.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxmlglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		job/board.hpp \
+		job/measuredobjlist.hpp \
+		sdk/customexception.hpp \
+		datahelper/formatconvertion.hpp \
+		job/measuredobj.hpp \
+		sdk/rectangle.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o inspectiondata.o job/inspectiondata.cpp
 
 ####### Install
 

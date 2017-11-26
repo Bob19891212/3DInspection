@@ -65,11 +65,20 @@ namespace Job
 
         std::string getName(){return this->m_name;}
 
-        //获取元件对象的X,Y轴坐标,获取元件的角度,获取元件的宽和高
-        SSDK::Rectangle getRectangle();
+        //获取元件对象的X,Y轴坐标,角度,宽和高
+        SSDK::Rectangle & getRectangle()
+        {
+            return this->m_rectangle;
+        }
 
-        //获取元件对象的X,Y轴坐标,获取元件的角度,获取元件的宽和高
-        void setRectangle();
+        //设置元件对象的X,Y轴坐标,角度,宽和高
+        void setRectangle(SSDK::Rectangle * rectangle)
+        {
+            this->m_rectangle = (*rectangle);
+        }
+
+        //随机生成对象的X,Y轴坐标,的角度,宽和高
+        void setRandomRectangle();
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     private:

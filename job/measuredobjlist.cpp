@@ -20,6 +20,7 @@ MeasuredObjList::~MeasuredObjList()
     //如果表头指针不为nullPtr,则依次释放所有链表的节点
     while (this->m_pHeadObj != nullptr)
     {
+
         //将链表中下一个节点的地址赋值给对象
         pTmpObj = this->m_pHeadObj->getNextMeasuredObjPtr();
 
@@ -79,7 +80,7 @@ void MeasuredObjList::createLinkedList(int size)
             //step2
             //将新增的成员变量赋值
             //设置新增节点的X,Y轴坐标,角度,及长和宽
-            pNewObj->setRectangle();
+            pNewObj->setRandomRectangle();
 
             if(i < 20)
             {

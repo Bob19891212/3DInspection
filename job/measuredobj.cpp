@@ -17,22 +17,17 @@ MeasuredObj::MeasuredObj()
 
 MeasuredObj::~MeasuredObj()
 {
-
+    this->m_pNextMeasuredObj = nullptr;
+    this->m_pPreMeasuredObj = nullptr;
 }
 //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-SSDK::Rectangle MeasuredObj::getRectangle()
-{
-    //获取 rectangle 的X轴,Y轴坐标,角度,长和宽
-    return this->m_rectangle;
-}
-
-void MeasuredObj::setRectangle()
+void MeasuredObj::setRandomRectangle()
 {
     try
     {
-        //设置rectangle的X轴,Y轴坐标,角度,长和宽
+        //随机生成rectangle的X轴,Y轴坐标,角度,长和宽
         this->m_rectangle.setX(RANDOM_NUM);
         this->m_rectangle.setY(RANDOM_NUM);
         this->m_rectangle.setAngle(RANDOM_NUM);

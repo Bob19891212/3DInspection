@@ -1,11 +1,12 @@
 #include <iostream>
 
 #include "sdk/customexception.hpp"
-#include "appsetting.hpp"
-#include "capturesetting.hpp"
-#include "setting.hpp"
-#include "../job/measuredobjlist.hpp"
-#include "../job/board.hpp"
+#include "app/appsetting.hpp"
+#include "app/capturesetting.hpp"
+#include "app/setting.hpp"
+#include "job/measuredobjlist.hpp"
+#include "job/board.hpp"
+#include "job/inspectiondata.hpp"
 
 using namespace std;
 using namespace App;
@@ -30,6 +31,7 @@ int main()
 //    cout<<i<<endl;
 
     QString path ="test.xml";
+
     Job::Board board;
     board.randomObjListData();
     board.setName("apple");
@@ -37,8 +39,15 @@ int main()
     board.setSizeY(40);
     board.setOriginalX(20);
     board.setOriginalY(10);
-//    board.writeToXml(path);
-    board.getMeasuredObjList().print();
+
+    Job::InspectionData inspectionData;
+
+    inspectionData.setBoard(&board);
+
+    inspectionData.writeToXml(path);
+    inspectionData.getBoard()->getMeasuredObjList().print();
+
+
 
     return 0;
 }
