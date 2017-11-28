@@ -42,51 +42,37 @@ namespace Job
         *  @param  path:将数据写入文件的路径
         *  @return  N/A
         */
-        void writeToXml(QString path);
-
-        /*
-        *  @brief  randomBoardData
-        *          随机生成一块PCB板上所有元件的名称,长,宽,及x,y轴坐标角度
-        *  @param  N/A
-        *  @return N/A
-        */
-        void randomObjListData();
+        void writeBoardDataToXml(QDomDocument inspectionData, QDomElement jobInfo);
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //访存函数
         //设置&获取PCB的名称
         void setName(std::string name){this->m_name = name;}
-
-        std::string getName(){return this->m_name;}
+        std::string name(){return this->m_name;}
 
         //设置&获取PCB的长
         void setSizeX(double sizeX) {this->m_sizeX = sizeX;}
-
-        double getSizeX() { return this->m_sizeX;}
+        double sizeX() { return this->m_sizeX;}
 
         //设置&获取PCB的宽
         void setSizeY(double sizeY) {this->m_sizeY = sizeY;}
-
-        double getSizeY() { return this->m_sizeY;}
+        double sizeY() { return this->m_sizeY;}
 
         //设置&获取PCB原点X轴的坐标
         void setOriginalX(double originalX) {this->m_originalX = originalX;}
-
-        double getOriginalX() { return this->m_originalX;}
+        double originalX() { return this->m_originalX;}
 
         //设置&获取PCB原点Y轴的坐标
         void setOriginalY(double originalY) {this->m_originalY = originalY;}
-
-        double getOriginalY() { return this->m_originalY;}
+        double originalY() { return this->m_originalY;}
 
         //设置&获取MeasuredObjList(即已检测对象)的链表
-        void setMeasurdObjList(MeasuredObjList & measuredObjList)
+        void setMeasurdObjList(MeasuredObjList * measuredObjList)
         {
-            this->m_measuredObjList = measuredObjList;
+            this->m_pMeasuredObjList = measuredObjList;
         }
-
-        MeasuredObjList &getMeasuredObjList() {return this->m_measuredObjList;}
+        MeasuredObjList * measuredObjList() {return this->m_pMeasuredObjList;}
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private:
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,7 +82,7 @@ namespace Job
         double m_sizeY;                         //记录PCB的宽
         double m_originalX;                     //记录PCB原点X轴的坐标
         double m_originalY;                     //记录PCB原点Y轴的坐标
-        MeasuredObjList m_measuredObjList;      //实例化一个检测对象列表
+        MeasuredObjList * m_pMeasuredObjList;      //实例化一个检测对象列表
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     };
 }  //End of namespace Job

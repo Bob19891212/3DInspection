@@ -4,6 +4,7 @@
 #include <QDomDocument>
 #include <QFile>
 #include <QTextStream>
+#include <sqlite3.h>
 
 #include "./board.hpp"
 
@@ -26,21 +27,15 @@ namespace Job
         //访存函数
         //设置 & 获取 程式的版本号
         void setVersion(std::string version){this->m_version = version;}
-
-        std::string getVersion(){return this->m_version;}
+        std::string version(){return this->m_version;}
 
         //设置 & 获取程式最后一次编辑时间
         void setLastEditingTime(std::string time){this->m_lastEditingTime = time;}
-
-        std::string getLastEditingTime(){ return this->m_lastEditingTime;}
+        std::string lastEditingTime(){ return this->m_lastEditingTime;}
 
         //设置 & 获取board信息
         void setBoard(Job::Board * board){ this->m_pBoard = board;}
-
-        Job::Board  * getBoard(){return this->m_pBoard;}
-
-//        Job::Board & getBoard(){return this->m_board;}
-
+        Job::Board * pBoard(){return this->m_pBoard;}
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,7 +49,11 @@ namespace Job
         *  @param   path : 写入文件的路径 (如 :"test.xml")
         *  @return  N/A
         */
-        void writeToXml(QString path);
+        void writeInspectionDataToXml(QString path);
+
+        void readFromJob(string path);
+
+        void convertFromV1(sqlite3 & sqlite);
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     private:

@@ -25,104 +25,51 @@ Board::~Board()
 
 //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //成员函数
-void Board::writeToXml(QString path)
+void Board::writeBoardDataToXml(QDomDocument inspectionData,QDomElement jobInfo)
 {
     try
     {
-        QDomDocument pcbInfo;
+        //在 inspectionData对象中创建一个board元素
+        QDomElement board = inspectionData.createElement("Board");
+        //设置board元素的属性
+        board.setAttribute("基板名称",QString::fromStdString( this->name()));
+        board.setAttribute("基板长度",this->sizeX());
+        board.setAttribute("基板宽度",this->sizeY());
+        board.setAttribute("X轴坐标",this->originalX());
+        board.setAttribute("Y轴坐标",this->originalY());
 
-        QDomElement board = pcbInfo.createElement("Board");
+        //将board元素添加至jobInfo节点下
+        jobInfo.appendChild(board);
 
-        board.setAttribute("基板名称",QString::fromStdString( this->getName()));
+        //定义一个临时对象指针,指向链表的头部
+        MeasuredObj * pTmpObj = this->m_pMeasuredObjList->pHead();
 
-        board.setAttribute("基板长度",this->getSizeX());
-
-        board.setAttribute("基板宽度",this->getSizeY());
-
-        board.setAttribute("X轴坐标",this->getOriginalX());
-
-        board.setAttribute("Y轴坐标",this->getOriginalY());
-
-        pcbInfo.appendChild(board);
-
-        MeasuredObj * pTmpObj = this->m_measuredObjList.getHeadPtr();
-
+        //将链表中所有元素
         while (pTmpObj != nullptr)
         {
-            QDomElement objList = pcbInfo.createElement(QString::fromStdString(pTmpObj->getName()));
+            //在inspectionData文档中添加元素 measuredObj(元素为元件名称)
+            QDomElement measuredObj = inspectionData.createElement(QString::fromStdString(pTmpObj->name()));
 
-            board.appendChild(objList);
-
-//            QString str = QString::fromStdString(pTmpObj->getName());
-//            objList.setAttribute("元件名称",str);
-
-            //            QDomAttr objProperty = pcbInfo.createAttribute("元件名称");
-            //            objProperty.setValue(QString::fromStdString(pTmpObj->getName()));
-
-            //            objList.setAttributeNode(objProperty);
-
-            //            objProperty = pcbInfo.createAttribute("X轴坐标");
-            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getX()));
-
-            //            objList.setAttributeNode(objProperty);
-
-            //            objProperty = pcbInfo.createAttribute("Y轴坐标");
-            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getY()));
-
-            //            objProperty = pcbInfo.createAttribute("元件角度");
-            //            objProperty.setValue(QString::number(pTmpObj->getRectangle().getAngle()));
-
-
-            //            objList.setAttributeNode(objProperty);
-
-
-            QString str = QString::number(pTmpObj->getRectangle().getX());
-            objList.setAttribute("X轴坐标",str);
-
-            str = QString::number(pTmpObj->getRectangle().getY());
-            objList.setAttribute("Y轴坐标",str);
-
-            str = QString::number(pTmpObj->getRectangle().getAngle());
-            objList.setAttribute("元件角度",str);
-
-            str = QString::number(pTmpObj->getRectangle().getWidth());
-            objList.setAttribute("元件宽度",str);
-
-            str = QString::number(pTmpObj->getRectangle().getHeight());
-            objList.setAttribute("元件高度",str);
-
-
-
-            pTmpObj = pTmpObj->getNextMeasuredObjPtr();
+            //设置元件名称的属性(x,y轴坐标,角度,长和宽)
+            QString str = QString::number(pTmpObj->rectangle().xPos());
+            measuredObj.setAttribute("X轴坐标",str);
+            str = QString::number(pTmpObj->rectangle().yPos());
+            measuredObj.setAttribute("Y轴坐标",str);
+            str = QString::number(pTmpObj->rectangle().angle());
+            measuredObj.setAttribute("元件角度",str);
+            str = QString::number(pTmpObj->rectangle().width());
+            measuredObj.setAttribute("元件宽度",str);
+            str = QString::number(pTmpObj->rectangle().height());
+            measuredObj.setAttribute("元件高度",str);
+            //将 measuredObj中的元素添加到board节点下
+            board.appendChild(measuredObj);
+            //获取下一个节点的地址
+            pTmpObj = pTmpObj->pNextMeasuredObj();
         }
-
-
-
-
-
-        QString filePath( path );
-        QFile file(filePath);
-
-        if (!file.open(QFile::WriteOnly | QFile::Text))
-        {
-            THROW_EXCEPTION("打开文件失败!!");
-        }
-
-        QTextStream out(&file);
-
-        pcbInfo.save(out,4);
-
-        file.close();
     }
     catch(const exception &ex)
     {
         THROW_EXCEPTION(ex.what());
     }
-
-}
-
-void Board::randomObjListData()
-{
-    this->m_measuredObjList.createLinkedList(SIZE);
 }
 //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

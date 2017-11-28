@@ -6,7 +6,12 @@ using namespace std;
 
 AppSetting::AppSetting()
 {
-
+    //初始化成员变量
+    this->m_companyName = "";
+    this->m_laneMode = "";
+    this->m_lang = "";
+    this->m_machineType ="";
+    this->m_theme = "";
 }
 
 AppSetting::~AppSetting()
@@ -37,11 +42,13 @@ void AppSetting::readAppSetting(const QString &path)
             //读取文件Theme内容,并判断是否在枚举中,如果不在则写入默认值
             QSettings configFile(path,QSettings::IniFormat);
 
-            QString theme = configFile.value("Theme").toString();
+            this->m_theme = configFile.value("THEME").toString().toStdString();
 
-            if(theme != "Black" && theme != "White")
+            //判断当前主题是否在枚举中,如果不在,则写入默认值
+            if( this->m_theme != VAR_TO_STR(THEME::BLACK) &&
+                this->m_theme != VAR_TO_STR(THEME::WHITE))
             {
-                configFile.setValue("Theme","Black");
+                configFile.setValue("THEME","BLACK");
             }
 
             //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -49,11 +56,12 @@ void AppSetting::readAppSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step2
             //读取文件Lang内容,并判断是否在枚举中,如果不在则写入默认值
-            QString lang = configFile.value("Lang").toString();
+            this->m_lang = configFile.value("LANG").toString().toStdString();
 
-            if(lang != "CN" && lang != "EN" )
+            if( this->m_lang != VAR_TO_STR(LANG::CN) &&
+                this->m_lang != VAR_TO_STR(LANG::EN) )
             {
-                configFile.setValue("Lang","CN");
+                configFile.setValue("LANG","CN");
             }
 
             //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -61,24 +69,25 @@ void AppSetting::readAppSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step3
             //读取文件LaneMode内容,并判断是否在枚举中,如果不在则写入默认值
-            QString laneMode = configFile.value("LaneMode").toString();
+            this->m_laneMode = configFile.value("LANEMODE").toString().toStdString();
 
-            if(laneMode != "SingleLane" &&
-               laneMode != "DualLane" &&
-               laneMode != "Simulator")
+            if( this->m_laneMode != VAR_TO_STR(LANEMODE::SIMULATOR) &&
+                this->m_laneMode != VAR_TO_STR(LANEMODE::SINGLELANE) &&
+                this->m_laneMode != VAR_TO_STR(LANEMODE::DUANLANE))
             {
-                configFile.setValue("LaneMode","SingleLane");
+                configFile.setValue("LANEMODE","SINGLELANE");
             }
             //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step4
             //读取文件MachineType内容,并判断是否在枚举中,如果不在则写入默认值
-            QString machineType = configFile.value("MachineType").toString();
+            this->m_machineType = configFile.value("MACHINETYPE").toString().toStdString();
 
-            if(machineType != "AOI" && machineType != "SPI")
+            if( this->m_machineType != VAR_TO_STR(MACHINETYPE::AOI) &&
+                this->m_machineType != VAR_TO_STR(MACHINETYPE::SPI))
             {
-                configFile.setValue("MachineType","AOI");
+                configFile.setValue("MACHINETYPE","AOI");
             }
 
             //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -86,16 +95,9 @@ void AppSetting::readAppSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step5
             //读取文件CompanyName内容,并判断是否在枚举中,如果不在则写入默认值
-            QString name = configFile.value("CompanyName").toString();
-
-            if(name.toStdString() != AppSetting::m_pCompanyName[0] &&
-               name.toStdString() != AppSetting::m_pCompanyName[1])
-            {
-                configFile.setValue("CompanyName","Scijet");
-            }
+            this->m_companyName = configFile.value("COMPANTNAME").toString().toStdString();
             //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         }
-
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
     //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -115,16 +117,11 @@ void AppSetting::writeAppSetting(const QString &path)
     //QSettings::IniFormat: 为存放文件的格式
     QSettings configFile(path,QSettings::IniFormat);
 
-    //将软件的主题写入文件,默认为"Black"
-    configFile.setValue("Theme","Black");
-    //将公司名称写入至文件,默认为"Scijet"
-    configFile.setValue("CompanyName","Scijet");
-    //将设备类型写入至文件,默认为"AOI"
-    configFile.setValue("MachineType","AOI");
-    //将设备的轨道模式写入文件,默认为"SingleLane"
-    configFile.setValue("LaneMode","SingleLane");
-    //将软件的语言写入文件,默认为"CN"
-    configFile.setValue("Lang","CN");
-
+    //将配置文件的"Theme","CompanyName","MachineType","LaneMode","Lang"写入默认值
+    configFile.setValue("THEME","BLACK");
+    configFile.setValue("MACHINETYPE","AOI");
+    configFile.setValue("LANEMODE","SINGLELANE");
+    configFile.setValue("LANG","CN");
+    configFile.setValue("COMPANYNAME","Scijet");
     //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 }

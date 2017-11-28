@@ -4,14 +4,13 @@
 #include <ctime>
 
 #include "../sdk/customexception.hpp"
-#include "../datahelper/formatconvertion.hpp"
+#include "../sdk/formatconvertion.hpp"
 #include "measuredobj.hpp"
 
 using namespace std;
 
 namespace Job
 {
-
     /**
      *  @brief MeasuredObjList
      *         根据指定长度,创建一个双向链表
@@ -36,28 +35,20 @@ namespace Job
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //成员函数
         //创建链表 ,添加&删除链表的节点
-        /*
-        *  @brief  createLinkedList
-        *          根据长度,创建指定长度的被检查对象(MeasuredObj)的链表
-        *  @param  size: 链表的长度(根据长度生成指定长度的链表)
-        *  @return N/A
-        */
-        void createLinkedList(int size);
-
         //添加链表的节点
         /*
         *  @brief   将对象插入至链表的表头
         *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的表头对象)
         *  @return  N/A
         */
-        void pushHead(MeasuredObj measuredObj);
+        void pushHead(MeasuredObj *pMeasuredObj);
 
         /*
         *  @brief   将对象插入至链表的尾部
         *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的尾部对象)
         *  @return  N/A
         */
-        void pushTail(MeasuredObj measuredObj);
+        void pushTail(MeasuredObj *pMeasuredObj);
 
         /*
         *  @brief   删除链表中第一个节点
@@ -74,13 +65,10 @@ namespace Job
         void pullTail();
 
         //获取链表的大小
-        int getSize();
-
-        //设置链表的大小
-        void setSize(int size);
+        int size(){ return this->m_size;}
 
         //获取链表的头指针
-        Job::MeasuredObj * getHeadPtr(){return this->m_pHeadObj;}
+        Job::MeasuredObj * pHead(){return this->m_pHeadObj;}
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

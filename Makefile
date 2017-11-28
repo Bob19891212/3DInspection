@@ -36,7 +36,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = 3DInspection1.0.0
-DISTDIR = /home/bob/3DInspection/.tmp/3DInspection1.0.0
+DISTDIR = /home/bob/BACKUP/3DInspection/.tmp/3DInspection1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/opt/Qt5.9.0/5.9/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/opt/Qt5.9.0/5.9/gcc_64/lib -lQt5Gui -lQt5Sql -lQt5Xml -lQt5Core -lGL -lpthread 
@@ -51,28 +51,30 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = app.cpp \
-		sdk/customexception.cpp \
+SOURCES       = sdk/customexception.cpp \
 		app/appsetting.cpp \
 		app/capturesetting.cpp \
-		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
-		datahelper/formatconvertion.cpp \
 		job/board.cpp \
-		job/inspectiondata.cpp 
-OBJECTS       = app.o \
-		customexception.o \
+		job/inspectiondata.cpp \
+		main.cpp \
+		sdk/formatconvertion.cpp \
+		app/app.cpp \
+		app/datageneration.cpp 
+OBJECTS       = customexception.o \
 		appsetting.o \
 		capturesetting.o \
-		setting.o \
 		rectangle.o \
 		measuredobj.o \
 		measuredobjlist.o \
-		formatconvertion.o \
 		board.o \
-		inspectiondata.o
+		inspectiondata.o \
+		main.o \
+		formatconvertion.o \
+		app.o \
+		datageneration.o
 DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt5.9.0/5.9/gcc_64/mkspecs/common/linux.conf \
@@ -255,23 +257,25 @@ DIST          = /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/spec_pre.prf \
 		3DInspection.pro sdk/customexception.hpp \
 		app/appsetting.hpp \
 		app/capturesetting.hpp \
-		app/setting.hpp \
 		sdk/rectangle.hpp \
 		job/measuredobj.hpp \
 		job/measuredobjlist.hpp \
-		datahelper/formatconvertion.hpp \
 		job/board.hpp \
-		job/inspectiondata.hpp app.cpp \
-		sdk/customexception.cpp \
+		job/inspectiondata.hpp \
+		sdk/formatconvertion.hpp \
+		app/app.hpp \
+		app/datageneration.hpp sdk/customexception.cpp \
 		app/appsetting.cpp \
 		app/capturesetting.cpp \
-		app/setting.cpp \
 		sdk/rectangle.cpp \
 		job/measuredobj.cpp \
 		job/measuredobjlist.cpp \
-		datahelper/formatconvertion.cpp \
 		job/board.cpp \
-		job/inspectiondata.cpp
+		job/inspectiondata.cpp \
+		main.cpp \
+		sdk/formatconvertion.cpp \
+		app/app.cpp \
+		app/datageneration.cpp
 QMAKE_TARGET  = 3DInspection
 DESTDIR       = 
 TARGET        = 3DInspection
@@ -667,8 +671,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /opt/Qt5.9.0/5.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents sdk/customexception.hpp app/appsetting.hpp app/capturesetting.hpp app/setting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp datahelper/formatconvertion.hpp job/board.hpp job/inspectiondata.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents app.cpp sdk/customexception.cpp app/appsetting.cpp app/capturesetting.cpp app/setting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp datahelper/formatconvertion.cpp job/board.cpp job/inspectiondata.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents sdk/customexception.hpp app/appsetting.hpp app/capturesetting.hpp sdk/rectangle.hpp job/measuredobj.hpp job/measuredobjlist.hpp job/board.hpp job/inspectiondata.hpp sdk/formatconvertion.hpp app/app.hpp app/datageneration.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents sdk/customexception.cpp app/appsetting.cpp app/capturesetting.cpp sdk/rectangle.cpp job/measuredobj.cpp job/measuredobjlist.cpp job/board.cpp job/inspectiondata.cpp main.cpp sdk/formatconvertion.cpp app/app.cpp app/datageneration.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -713,88 +717,6 @@ compiler_lex_clean:
 compiler_clean: compiler_moc_predefs_clean 
 
 ####### Compile
-
-app.o: app.cpp sdk/customexception.hpp \
-		app/appsetting.hpp \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
-		app/capturesetting.hpp \
-		app/setting.hpp \
-		job/measuredobjlist.hpp \
-		datahelper/formatconvertion.hpp \
-		job/measuredobj.hpp \
-		sdk/rectangle.hpp \
-		job/board.hpp \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/QDomDocument \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qdom.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxmlglobal.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
-		job/inspectiondata.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o app.cpp
 
 customexception.o: sdk/customexception.cpp sdk/customexception.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customexception.o sdk/customexception.cpp
@@ -865,7 +787,8 @@ appsetting.o: app/appsetting.cpp app/appsetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
-		sdk/customexception.hpp
+		sdk/customexception.hpp \
+		sdk/formatconvertion.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o appsetting.o app/appsetting.cpp
 
 capturesetting.o: app/capturesetting.cpp app/capturesetting.hpp \
@@ -934,79 +857,9 @@ capturesetting.o: app/capturesetting.cpp app/capturesetting.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
-		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o app/capturesetting.cpp
-
-setting.o: app/setting.cpp app/setting.hpp \
-		app/appsetting.hpp \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
-		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
 		sdk/customexception.hpp \
-		app/capturesetting.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o setting.o app/setting.cpp
+		sdk/formatconvertion.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o capturesetting.o app/capturesetting.cpp
 
 rectangle.o: sdk/rectangle.cpp sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rectangle.o sdk/rectangle.cpp
@@ -1018,14 +871,10 @@ measuredobj.o: job/measuredobj.cpp job/measuredobj.hpp \
 
 measuredobjlist.o: job/measuredobjlist.cpp job/measuredobjlist.hpp \
 		sdk/customexception.hpp \
-		datahelper/formatconvertion.hpp \
+		sdk/formatconvertion.hpp \
 		job/measuredobj.hpp \
 		sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o measuredobjlist.o job/measuredobjlist.cpp
-
-formatconvertion.o: datahelper/formatconvertion.cpp datahelper/formatconvertion.hpp \
-		sdk/customexception.hpp
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o formatconvertion.o datahelper/formatconvertion.cpp
 
 board.o: job/board.cpp job/board.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/QDomDocument \
@@ -1098,7 +947,7 @@ board.o: job/board.cpp job/board.hpp \
 		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		job/measuredobjlist.hpp \
 		sdk/customexception.hpp \
-		datahelper/formatconvertion.hpp \
+		sdk/formatconvertion.hpp \
 		job/measuredobj.hpp \
 		sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o board.o job/board.cpp
@@ -1175,10 +1024,247 @@ inspectiondata.o: job/inspectiondata.cpp job/inspectiondata.hpp \
 		job/board.hpp \
 		job/measuredobjlist.hpp \
 		sdk/customexception.hpp \
-		datahelper/formatconvertion.hpp \
+		sdk/formatconvertion.hpp \
 		job/measuredobj.hpp \
 		sdk/rectangle.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o inspectiondata.o job/inspectiondata.cpp
+
+main.o: main.cpp app/app.hpp \
+		app/appsetting.hpp \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		sdk/customexception.hpp \
+		sdk/formatconvertion.hpp \
+		app/capturesetting.hpp \
+		job/inspectiondata.hpp \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/QDomDocument \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qdom.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxmlglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
+		job/board.hpp \
+		job/measuredobjlist.hpp \
+		job/measuredobj.hpp \
+		sdk/rectangle.hpp \
+		app/datageneration.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+formatconvertion.o: sdk/formatconvertion.cpp sdk/formatconvertion.hpp \
+		sdk/customexception.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o formatconvertion.o sdk/formatconvertion.cpp
+
+app.o: app/app.cpp app/app.hpp \
+		app/appsetting.hpp \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QSettings \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsettings.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		sdk/customexception.hpp \
+		sdk/formatconvertion.hpp \
+		app/capturesetting.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o app.o app/app.cpp
+
+datageneration.o: app/datageneration.cpp app/datageneration.hpp \
+		sdk/customexception.hpp \
+		job/inspectiondata.hpp \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/QDomDocument \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qdom.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxmlglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtcore-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qversiontagging.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtXml/qtxml-config.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QFile \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfile.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qfiledevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhashfunctions.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/QTextStream \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qtextstream.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qlocale.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvariant.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qmap.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qdebug.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qhash.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qset.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qshareddata.h \
+		/opt/Qt5.9.0/5.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		job/board.hpp \
+		job/measuredobjlist.hpp \
+		sdk/formatconvertion.hpp \
+		job/measuredobj.hpp \
+		sdk/rectangle.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datageneration.o app/datageneration.cpp
 
 ####### Install
 

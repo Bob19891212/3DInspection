@@ -6,9 +6,9 @@ using namespace App;
 
 CaptureSetting::CaptureSetting()
 {
-    this->m_imgWidth = 4096;                //定义图片的宽度为4096
-    this->m_imgHeight = 3072;               //定义图片的高度为3072
-    this->m_imgBit = 8;                     //初始化图片格式的位数为8
+    this->m_imgWidth = 0;                //定义图片的宽度为4096
+    this->m_imgHeight = 0;               //定义图片的高度为3072
+    this->m_imgBit = "";                 //初始化图片格式的位数为8
 }
 
 CaptureSetting::~CaptureSetting()
@@ -43,9 +43,9 @@ void CaptureSetting::readCaptureSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step2.1
             //读取文件Image/Width数据,并判断是否与系统默认值匹配,如果不匹配,则抛出异常
-            int width = configFile.value("Image/Width").toInt();
+            this->m_imgWidth = configFile.value("Image/Width").toInt();
 
-            if(width != CaptureSetting::m_imgWidth)
+            if( this->m_imgWidth != 4096 )
             {
                 THROW_EXCEPTION("读取文件数据Image/Width失败!");
             }
@@ -54,9 +54,9 @@ void CaptureSetting::readCaptureSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step2.2
             //读取文件Image/Height数据,并判断是否与系统默认值匹配,如果不匹配,则抛出异常
-            int height = configFile.value("Image/Height").toInt();
+            this->m_imgHeight = configFile.value("Image/Height").toInt();
 
-            if(height !=  CaptureSetting::m_imgHeight)
+            if( this->m_imgHeight !=  3072)
             {
                 THROW_EXCEPTION("读取文件数据Image/Height失败!");
             }
@@ -65,9 +65,10 @@ void CaptureSetting::readCaptureSetting(const QString &path)
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step2.3
             //读取文件Image/ImgBit数据,并判断是否与系统默认值匹配,如果不匹配,则抛出异常
-            int imgBit = configFile.value("Image/ImgBit").toInt();
+            this->m_imgBit = configFile.value("Image/ImgBit").toString().toStdString();
 
-            if(imgBit !=  8 && imgBit !=  16)
+            if( this->m_imgBit !=  VAR_TO_STR(IMGBIT::BIT8) &&
+                this->m_imgBit !=  VAR_TO_STR(IMGBIT::BIT16) )
             {
                 THROW_EXCEPTION("读取文件数据Image/ImgBit失败!");
             }
@@ -79,8 +80,7 @@ void CaptureSetting::readCaptureSetting(const QString &path)
     {
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //捕获异常,并抛出
-        throw;
-
+        THROW_EXCEPTION(ex.what());
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
 }
@@ -96,12 +96,11 @@ void CaptureSetting::writeCaptureSetting(const QString &path)
         QSettings configFile(path,QSettings::IniFormat);
 
         //将Image/Width的数据写为系统默认值,默认为"4096"
-        configFile.setValue("Image/Width",CaptureSetting::m_imgWidth);
+        configFile.setValue("Image/Width",4096);
         //将Image/Height的数据写为系统默认值,默认为"3072"
-        configFile.setValue("Image/Height",CaptureSetting::m_imgHeight);
+        configFile.setValue("Image/Height",3072);
         //将Image/Height的数据写为系统默认值,默认为"8"
-        configFile.setValue("Image/ImgBit",CaptureSetting::m_imgBit);
-
+        configFile.setValue("Image/ImgBit","BIT8");
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
     catch(const exception &ex)
@@ -109,7 +108,6 @@ void CaptureSetting::writeCaptureSetting(const QString &path)
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //捕获异常,并抛出
         THROW_EXCEPTION(ex.what());
-
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }
 }

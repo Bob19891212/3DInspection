@@ -6,23 +6,23 @@
 #include <string>
 #include <sstream>
 
-//宏函数,抛出异常信息
-//根据异常参数,抛出调用该函数的文件名,行号,函数名,及异常参数
-#define THROW_EXCEPTION(exMsg)\
-{\
-    std::ostringstream message;\
-    message << "\n""File:"<<__FILE__<<"\n"\
-            << "Line:"<<__LINE__<<"\n"\
-            << "Func:"<<__FUNCTION__<<"\n"\
-            << "Detail:"<<exMsg<<"\n";\
-    std::string msg = message.str();\
-    throw SSDK::CustomException(msg);\
-}
-
 using namespace std;
 
 namespace SSDK
 {
+    //宏函数,抛出异常信息
+    //根据异常参数,抛出调用该函数的文件名,行号,函数名,及异常参数
+    #define THROW_EXCEPTION(exMsg)\
+    {\
+        std::ostringstream message;\
+        message << "\n""File:"<<__FILE__<<"\n"\
+                << "Line:"<<__LINE__<<"\n"\
+                << "Func:"<<__FUNCTION__<<"\n"\
+                << "Detail:"<<exMsg<<"\n";\
+        std::string msg = message.str();\
+        throw SSDK::CustomException(msg);\
+    }
+
     /**
      *  @brief CustomException
      *         自定义异常继承C++系统标准异常
