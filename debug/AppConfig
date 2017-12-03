@@ -1,0 +1,3 @@
+[General]
+AppSettingPath=./AppSetting.ini
+CaptureSettingPath=./CaptureSetting.ini
