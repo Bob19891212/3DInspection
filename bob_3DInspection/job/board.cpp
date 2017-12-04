@@ -53,7 +53,9 @@ void Board::writeBoardDataToXml(QDomDocument inspectionData,QDomElement jobInfo)
 
         //当链表的临时指针不为nullptr时
         //将列表中检测对象的名称添加到xml文档的节点下
-        //设置元件的属性(x,y坐标,angle角度,高度,宽度)
+        //设置元件的属性(x,y坐标,高度,宽度)
+        //2017.12.02 bob
+        //添加元件的角度属性写入到xml文件中
         while (pTmpObj != nullptr)
         {
             //在inspectionData文档中添加元素 measuredObj(元素为元件名称)
@@ -68,6 +70,9 @@ void Board::writeBoardDataToXml(QDomDocument inspectionData,QDomElement jobInfo)
             measuredObj.setAttribute("元件宽度",str);
             str = QString::number(pTmpObj->rectangle().height());
             measuredObj.setAttribute("元件高度",str);
+            //2017.12.02 bob
+            str = QString::number(pTmpObj->rectangle().angle());
+            measuredObj.setAttribute("元件角度",str);
             //将 measuredObj中的元素添加到board节点下
             board.appendChild(measuredObj);
             //获取下一个节点的地址
