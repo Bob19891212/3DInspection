@@ -38,7 +38,9 @@ void DataGeneration::generateInspectionData(int size,
             //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //step1.1
             //生成一个rectangle对象,x,y坐标,角度,及长和宽均为随机生成
+            //2017.12.02 bob 添加生成检测对象的角度
             auto rect = Rectangle(randomNum.randomDouble(max,min),
+                                  randomNum.randomDouble(max,min),
                                   randomNum.randomDouble(max,min),
                                   randomNum.randomDouble(max,min),
                                   randomNum.randomDouble(max,min));
@@ -91,11 +93,11 @@ void DataGeneration::generateInspectionData(int size,
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //step3
         //生成inspectionData数据(检测程式的版本信息,检测程式上次保存时间)
-        string versionName = "V1";
+        //2017.12.02 bob    将自动生成检测程式的版本号设置为V2
+        string versionName = "V2";
         pInspectionData->setVersion(versionName);
 
         time_t currentTime = time(NULL);
-
         tm * pTime = localtime(&currentTime);       //获取当前系统时间的地址
         //获取时间,格式为 ( xx年/xx月/xx日  x时:x分:x秒)
         string lastEditingTime = FormatConvertion::intToString(pTime->tm_year+1900) +
@@ -103,7 +105,7 @@ void DataGeneration::generateInspectionData(int size,
               "/" + FormatConvertion::intToString(pTime->tm_mday) +
               " " + FormatConvertion::intToString(pTime->tm_hour) +
               ":" + FormatConvertion::intToString(pTime->tm_min) +
-              ":" + FormatConvertion::intToString(pTime->tm_sec) ;
+              ":" + FormatConvertion::intToString(pTime->tm_sec);
         pInspectionData->setLastEditingTime(lastEditingTime);
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     }

@@ -235,17 +235,19 @@ void MeasuredObjList::pullTail()
 
 //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //显示列表中所有检测对象的元件名称,X,Y轴坐标,角度,及长和宽
+//2017.12.02 bob 添加显示元件的角度
 void MeasuredObjList::print()
 {
     MeasuredObj *pTmpObj = this->m_pHeadObj;
 
     while (pTmpObj != nullptr)
     {
-        cout<<"元件名称:"<<pTmpObj->name()<<"\t"
+        cout<<"Name:"<<pTmpObj->name()<<"\t"
             <<"X:"<< pTmpObj->rectangle().xPos()<<"\t"
             <<"Y:"<<pTmpObj->rectangle().yPos()<<"\t"
             <<"Width:"<<pTmpObj->rectangle().width()<<"\t"
-            <<"Height"<<pTmpObj->rectangle().height()<<endl;
+            <<"Height:"<<pTmpObj->rectangle().height()<<"\t"
+            <<"Angle:"<<pTmpObj->rectangle().angle()<<endl;
         pTmpObj = pTmpObj->pNextMeasuredObj();
     }
 }
