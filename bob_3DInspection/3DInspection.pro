@@ -11,7 +11,6 @@ SOURCES += \
     app/capturesetting.cpp \
     sdk/rectangle.cpp \
     job/measuredobj.cpp \
-    job/measuredobjlist.cpp \
     job/board.cpp \
     job/inspectiondata.cpp \
     main.cpp \

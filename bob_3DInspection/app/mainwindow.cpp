@@ -25,7 +25,7 @@ void MainWindow::loadJob(QString path)
     //实例化类对象(InspectionData,Board,MeasuredObjList三个类对象)
     InspectionData inspectionData;          //将 InspectionData 类实例化
     Board board;                            //将 board 类实例化
-    MeasuredObjList measuredObjList;        //将检测对象列表实例化
+    MeasuredObjList<MeasuredObj> measuredObjList;        //将检测对象列表实例化
 
     //将board的成员变量(指向检测对象列表的指针)指向实例化的检测对象列表
     board.setMeasurdObjList(&measuredObjList);

@@ -68,11 +68,11 @@ namespace Job
         double originalY() { return this->m_originalY;}
 
         //设置&获取MeasuredObjList(即已检测对象)的链表
-        void setMeasurdObjList(MeasuredObjList * measuredObjList)
+        void setMeasurdObjList(MeasuredObjList<MeasuredObj> * measuredObjList)
         {
             this->m_pMeasuredObjList = measuredObjList;
         }
-        MeasuredObjList * pMeasuredObjList() {return this->m_pMeasuredObjList;}
+        MeasuredObjList<MeasuredObj> * pMeasuredObjList() {return this->m_pMeasuredObjList;}
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     private:
         //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -82,7 +82,8 @@ namespace Job
         double m_sizeY;                         //记录PCB的宽
         double m_originalX;                     //记录PCB原点X轴的坐标
         double m_originalY;                     //记录PCB原点Y轴的坐标
-        MeasuredObjList * m_pMeasuredObjList;   //指向检测对象列表的头指针
+        MeasuredObjList<MeasuredObj> *m_pMeasuredObjList;
+//        MeasuredObjList * m_pMeasuredObjList;   //指向检测对象列表的头指针
         //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     };
 }  //End of namespace Job

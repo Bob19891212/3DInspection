@@ -7,89 +7,204 @@
 #include "../sdk/formatconvertion.hpp"
 #include "measuredobj.hpp"
 
-using namespace std;
-
-namespace Job
+template <class T>
+class MeasuredObjList
 {
-    /**
-     *  @brief MeasuredObjList
-     *         根据指定长度,创建一个双向链表
-     *         插入节点,删除节点,清空所有节点
-     *         获取链表的长度
-     *  @author bob
-     *  @version 1.00 2017-11-22 bob
-     *                note:create it
-     */
-    class MeasuredObjList
-    {
-    public:
-        //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //构造 & 析构函数
-        //初始化成员变量
-        MeasuredObjList();
+public:
+    void pushHead(T *pMeasuredObj);
 
-        //释放链表存储空间
-        ~MeasuredObjList();
-        //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    void pushTail(T *pMeasuredObj);
 
-        //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //成员函数
-        //创建链表 ,添加&删除链表的节点
-        //添加链表的节点
-        /*
-        *  @brief   将对象插入至链表的表头
-        *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的表头对象)
-        *  @return  N/A
-        */
-        void pushHead(MeasuredObj *pMeasuredObj);
+    void pullHead();
 
-        /*
-        *  @brief   将对象插入至链表的尾部
-        *  @param   measuredObj:要插入链表的measuredObj对象(即插入至链表的尾部对象)
-        *  @return  N/A
-        */
-        void pushTail(MeasuredObj *pMeasuredObj);
+    void pullTail();
 
-        /*
-        *  @brief   删除链表中第一个节点
-        *  @param   N/A
-        *  @return  N/A
-        */
-        void pullHead();
+    T * pHead();
 
-        /*
-        *  @brief   删除链表中最后一个节点
-        *  @param   N/A
-        *  @return  N/A
-        */
-        void pullTail();
+    void print();
 
-        //获取链表的大小
-        int size(){ return this->m_size;}
-
-        //获取链表的头指针
-        Job::MeasuredObj * pHead(){return this->m_pHeadObj;}
-        //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-        //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        /*
-        *  @brief  print
-        *          将所有检测对象数据,显示在终端上,具体数据如下:
-        *          检测对象的名称,x,y轴坐标,检测对象的长,宽
-        *          及检测对象的角度         (2017.12.02 bob)
-        *  @param   N/A
-        *  @return  N/A
-        */
-        void print();
-        //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    private:
-        //>>>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //成员变量
-        int m_size;                     //链表的大小
-        Job::MeasuredObj * m_pHeadObj;  //指向链表表头的指针
-        //<<<----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-    };
-} //End of namespace Job
+private:
+    T *m_pHeadObj;
+    int m_size;
+};
 
 #endif // MEASUREDOBJLIST_HPP
+
+
+template<class T>
+void MeasuredObjList<T>::pushHead(T *pMeasuredObj)
+{
+    try
+    {
+        T * pTmpObj = this->m_pHeadObj;  //pTmpObj为临时记录列表检测对象的地址
+
+        //设置对象的成员变量(指向上一个检测对象的指针),设置为nullptr
+        pMeasuredObj->setNextMeasuredObjPtr(nullptr);
+        //设置对象的成员变量(指向下一个检测对象的指针)指向原来的表头
+        pMeasuredObj->setNextMeasuredObjPtr(pTmpObj);
+
+        //如果列表原来的头指针不为nullptr,则设置原来表头上一个头指针指向当前的表头
+        if(nullptr != pTmpObj)
+        {
+            pTmpObj->setPreMeasuredObjPtr(pTmpObj);
+        }
+
+        this->m_pHeadObj = pMeasuredObj;                //重新设置列表的头指针
+
+        this->m_size++;                                 //将列表的长度 +1
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
+}
+
+template<class T>
+void MeasuredObjList<T>::pushTail(T *pMeasuredObj)
+{
+    try
+    {
+        T * pTailObj = this->m_pHeadObj; //pTailObj:为记录列表尾部检测对象的指针
+        T * pTmpObj;                   //pTmpObj:为临时记录列表检测对象地址的指针
+
+        if(nullptr != this->m_pHeadObj)
+        {
+            pTmpObj = this->m_pHeadObj->pNextMeasuredObj();
+        }
+        else
+        {
+            pTmpObj = nullptr;
+        }
+
+        while (nullptr != pTmpObj)
+        {
+            pTailObj = pTmpObj;
+            pTmpObj = pTmpObj->pNextMeasuredObj();
+        }
+
+        // 设置对象中成员变量(指向下一个检测对象的指针)设置为nullptr
+        pMeasuredObj->setNextMeasuredObjPtr(nullptr);
+        // 将新创建对象中成员变量(指向下一个检测对象的指针)设置为nullptr
+        pMeasuredObj->setPreMeasuredObjPtr(pTailObj);
+
+        //如果列表尾部不为nullptr,则将列表尾部成员变量(指向下一个检测对象的指针)指向列表尾部
+        if(nullptr != pTailObj)
+        {
+            pTailObj->setNextMeasuredObjPtr(pMeasuredObj);
+        }
+        else
+        {
+            this->m_pHeadObj = pMeasuredObj;
+        }
+        this->m_size++;                             //将列表的长度 +1
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
+}
+
+template<class T>
+void MeasuredObjList<T>::pullHead()
+{
+    try
+    {
+        if(this->m_size > 0)
+        {
+            T *pTmpObj = nullptr;
+            pTmpObj = this->m_pHeadObj->pNextMeasuredObj();
+            this->m_pHeadObj->setNextMeasuredObjPtr(nullptr);
+
+            if(pTmpObj != nullptr)
+            {
+                pTmpObj->setPreMeasuredObjPtr(nullptr);
+            }
+
+            this->m_pHeadObj = pTmpObj;
+
+            this->m_size--;                     //将列表中的长度减一
+        }
+        else
+        {
+            THROW_EXCEPTION("列表长度为0,无法删除检测对象!");
+        }
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
+}
+
+template<class T>
+void MeasuredObjList<T>::pullTail()
+{
+    try
+    {
+        if(this->m_size > 0)
+        {
+            T * pTailObj = this->m_pHeadObj;
+            T * pTmpObj = this->m_pHeadObj->pNextMeasuredObj();
+
+            while (pTmpObj != nullptr)
+            {
+                pTailObj = pTmpObj;
+                pTmpObj = pTmpObj->pNextMeasuredObj();
+            }
+
+            pTmpObj = pTailObj->pPreMeasuredObj();
+
+            pTailObj->setPreMeasuredObjPtr(nullptr);
+            pTailObj = nullptr;
+
+            if(pTmpObj != nullptr)
+            {
+                //将倒数第二个检测对象中的成员变量(指向下一个检测对象的指针)
+                pTmpObj->setNextMeasuredObjPtr(nullptr);
+            }
+            else
+            {
+                this->m_pHeadObj = nullptr;
+            }
+
+            this->m_size--;                     //将列表的长度减一
+        }
+        else
+        {
+            THROW_EXCEPTION("列表长度为0,无法删除检测对象!");
+        }
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
+}
+
+template<class T>
+T *MeasuredObjList<T>::pHead()
+{
+    return this->m_pHeadObj;
+}
+
+template<class T>
+void MeasuredObjList<T>::print()
+{
+    try
+    {
+        T *pTmpObj = this->m_pHeadObj;
+
+        while (pTmpObj != nullptr)
+        {
+            cout<<"Name:"<<pTmpObj->name()<<"\t"
+               <<"X:"<< pTmpObj->rectangle().xPos()<<"\t"
+              <<"Y:"<<pTmpObj->rectangle().yPos()<<"\t"
+             <<"Width:"<<pTmpObj->rectangle().width()<<"\t"
+            <<"Height:"<<pTmpObj->rectangle().height()<<"\t"
+            <<"Angle:"<<pTmpObj->rectangle().angle()<<endl;
+            pTmpObj = pTmpObj->pNextMeasuredObj();
+        }
+    }
+    catch(const exception &ex)
+    {
+        THROW_EXCEPTION(ex.what());
+    }
+}
